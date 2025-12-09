@@ -30,7 +30,7 @@ int precedence(char op) {
     }
 }
 
-// Check if operator is left associative
+
 int isLeftAssociative(char op) {
     return (op == '+' || op == '-' || op == '*' || op == '/');
 }
@@ -45,22 +45,21 @@ void infixToPostfix(char infix[], char postfix[]) {
     for (int i = 0; infix[i] != '\0'; i++) {
         char c = infix[i];
 
-        // If operand, add to output
         if (isalnum(c)) {
             postfix[k++] = c;
         }
-        // If '(', push to stack
+      
         else if (c == '(') {
             push(c);
         }
-        // If ')', pop until '('
+        
         else if (c == ')') {
             while (top != -1 && peek() != '(') {
                 postfix[k++] = pop();
             }
-            pop(); // remove '('
+            pop(); 
         }
-        // If operator
+      
         else if (isOperator(c)) {
             while (top != -1 &&
                 (precedence(peek()) > precedence(c) ||
@@ -71,8 +70,6 @@ void infixToPostfix(char infix[], char postfix[]) {
             push(c);
         }
     }
-
-    // Pop remaining operators
     while (top != -1) {
         postfix[k++] = pop();
     }
@@ -92,3 +89,4 @@ int main() {
 
     return 0;
 }
+
